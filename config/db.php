@@ -1,15 +1,9 @@
 <?php
 
-$config = [
+return [
     'class' => 'yii\db\Connection',
-    'dsn' => 'mysql:host=localhost;dbname=database_name',
-    'username' => 'database_username',
-    'password' => 'database_password',
+    'dsn' => 'mysql:host=' . getenv('DB_HOST') . ';dbname=' . getenv('DB_DATABASE'),
+    'username' => getenv('DB_USERNAME'),
+    'password' => getenv('DB_PASSWORD'),
     'charset' => 'utf8',
 ];
-
-if (file_exists(__DIR__ . '/db.local.php')) {
-    $config = \yii\helpers\ArrayHelper::merge($config, require(__DIR__ . '/db.local.php'));
-}
-
-return $config;
