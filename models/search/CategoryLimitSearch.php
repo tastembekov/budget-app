@@ -19,7 +19,7 @@ class CategoryLimitSearch extends CategoryLimit
     {
         return [
             [['id', 'category_id', 'year', 'month'], 'integer'],
-            [['amount', 'total'], 'number'],
+            [['amount'], 'number'],
         ];
     }
 
@@ -64,7 +64,6 @@ class CategoryLimitSearch extends CategoryLimit
             'year' => $this->year,
             'month' => $this->month,
             'amount' => $this->amount,
-            'total' => $this->total,
         ]);
 
         return $dataProvider;

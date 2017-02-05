@@ -12,7 +12,6 @@ use Yii;
  * @property integer $year
  * @property integer $month
  * @property double $amount
- * @property double $total
  *
  * @property Category $category
  */
@@ -34,7 +33,7 @@ class CategoryLimit extends \yii\db\ActiveRecord
         return [
             [['category_id', 'year', 'month'], 'required'],
             [['category_id', 'year', 'month'], 'integer'],
-            [['amount', 'total'], 'number'],
+            [['amount'], 'number'],
             [['category_id', 'year', 'month'], 'unique', 'targetAttribute' => ['category_id', 'year', 'month'], 'message' => 'The combination of Category ID, Year and Month has already been taken.'],
             [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => ['category_id' => 'id']],
         ];
@@ -51,7 +50,6 @@ class CategoryLimit extends \yii\db\ActiveRecord
             'year' => Yii::t('app', 'Year'),
             'month' => Yii::t('app', 'Month'),
             'amount' => Yii::t('app', 'Amount'),
-            'total' => Yii::t('app', 'Total'),
         ];
     }
 

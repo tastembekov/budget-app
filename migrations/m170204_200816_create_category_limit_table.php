@@ -17,8 +17,7 @@ class m170204_200816_create_category_limit_table extends Migration
             'category_id' => $this->integer()->notNull(),
             'year' => $this->integer()->notNull(),
             'month' => $this->integer()->notNull(),
-            'amount' => $this->float()->notNull()->defaultValue(0),
-            'total' => $this->float()->notNull()->defaultValue(0),
+            'amount' => $this->float()->notNull()->defaultValue(0)
         ]);
 
         $this->createIndex('uq_category_limit_year_month_container', '{{%category_limit}}',

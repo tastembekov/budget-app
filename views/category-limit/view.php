@@ -33,7 +33,6 @@ $this->params['breadcrumbs'][] = $this->title;
             'year',
             'month',
             'amount',
-            'total',
         ],
     ]) ?>
 

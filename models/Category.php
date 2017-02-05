@@ -60,21 +60,4 @@ class Category extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Transaction::className(), ['category_id' => 'id']);
     }
-
-    /**
-     * Update container total
-     * @param \DateTime $date
-     * @param integer $amount
-     * @return boolean
-     */
-    public function updateTotal(\DateTime $date, $amount)
-    {
-        /* @var CategoryLimit $limit */
-        $limit = $this->getCategoryLimits()->where(['year' => $date->format('Y'), 'month' => $date->format('m')])->one();
-        if ($limit !== null) {
-            $limit->total = $limit->total + intval($amount);
-            return $limit->save();
-        }
-        return true;
-    }
 }
