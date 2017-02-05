@@ -65,9 +65,11 @@ class CategoryLimitController extends Controller
     public function actionCreate()
     {
         $model = new CategoryLimit();
+        $model->year = date('Y');
+        $model->month = date('n');
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         } else {
             return $this->render('create', [
                 'model' => $model,

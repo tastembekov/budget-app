@@ -31,7 +31,11 @@ use dmstr\widgets\Alert;
 
     <section class="content container">
         <?= Alert::widget() ?>
-        <?= $content ?>
+        <div class="box">
+            <div class="box-body">
+                <?= $content ?>
+            </div>
+        </div>
     </section>
 </div>
 

@@ -7,6 +7,8 @@ use yii\grid\GridView;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\search\ContainerSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
+/* @var $total string */
+/* @var $total_limit string */
 
 $this->title = Yii::t('app', 'Containers');
 $this->params['breadcrumbs'][] = $this->title;
@@ -20,6 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
     </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
+        'showFooter' => true,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
@@ -37,9 +40,13 @@ $this->params['breadcrumbs'][] = $this->title;
                     return (new \app\models\ContainerView($model))->getTotalOnMainCurrency();
                 },
                 'format' => ['decimal', 0],
+                'footer' => $total
             ],
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'footer' => $total_limit
+            ],
         ],
     ]); ?>
 </div>

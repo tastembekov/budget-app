@@ -2,6 +2,8 @@
 
 namespace app\controllers;
 
+use app\models\CategoryLimit;
+use app\models\forms\StatisticsForm;
 use Yii;
 use app\models\Container;
 use app\models\search\ContainerSearch;
@@ -37,10 +39,16 @@ class ContainerController extends Controller
     {
         $searchModel = new ContainerSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $total = Container::find()->joinWith('currency c')->sum('total * c.rate');
+        $total_limit = CategoryLimit::find()
+            ->where(['year' => date('Y'), 'month' => date('m')])
+            ->sum('amount');
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'total' => number_format($total, 2, ',', ' '),
+            'total_limit' => number_format($total_limit, 2, ',', ' '),
         ]);
     }
 

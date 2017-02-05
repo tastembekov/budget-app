@@ -27,8 +27,7 @@ class TransactionForm
         try {
             $model = $this->getTransaction();
             if ($model->isNewRecord && $model->save() &&
-                $model->container->updateTotal($model->amount) && // Update container
-                $model->category->updateTotal((new \DateTime($model->date)), $model->amount) // Update category limit
+                $model->container->updateTotal($model->amount) // Update container
             ) {
                 $transaction->commit();
                 return true;
@@ -51,8 +50,7 @@ class TransactionForm
             $model = $this->getTransaction();
 
             if (!$model->isNewRecord &&
-                $model->container->updateTotal($model->amount) && // reduce by value
-                $model->category->updateTotal((new \DateTime($model->date)), $model->amount) && // Update category limit
+                $model->container->updateTotal(-1 * $model->amount) && // reduce by value
                 $model->delete()
             ) {
                 $transaction->commit();
