@@ -65,30 +65,12 @@ class TransactionController extends Controller
     public function actionCreate()
     {
         $model = new Transaction();
+        $model->date = date('Y-m-d');
 
         if ($model->load(Yii::$app->request->post()) && (new TransactionForm($model))->create()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         } else {
             return $this->render('create', [
-                'model' => $model,
-            ]);
-        }
-    }
-
-    /**
-     * Updates an existing Transaction model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionUpdate($id)
-    {
-        $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && (new TransactionForm($model))->update()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('update', [
                 'model' => $model,
             ]);
         }

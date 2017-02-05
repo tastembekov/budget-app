@@ -26,32 +26,9 @@ class TransactionForm
         $transaction = Yii::$app->db->beginTransaction();
         try {
             $model = $this->getTransaction();
-            if ($model->isNewRecord && $model->save() && $model->container->addToTotal($model->amount)) {
-                $transaction->commit();
-                return true;
-            }
-            throw new \Exception('Error');
-        } catch (\Exception $e) {
-            $transaction->rollBack();
-            return false;
-        }
-    }
-
-    /**
-     * Update transaction
-     * @return boolean
-     */
-    public function update()
-    {
-        $transaction = Yii::$app->db->beginTransaction();
-        try {
-            $model = $this->getTransaction();
-            $container = $model->container;
-
-            if (!$model->isNewRecord &&
-                $container->reduceFromTotal($model->getOldAttribute('amount')) && // reduce by old value
-                $model->save() &&
-                $container->addToTotal($model->amount) // add by new value
+            if ($model->isNewRecord && $model->save() &&
+                $model->container->updateTotal($model->amount) && // Update container
+                $model->category->updateTotal((new \DateTime($model->date)), $model->amount) // Update category limit
             ) {
                 $transaction->commit();
                 return true;
@@ -74,7 +51,8 @@ class TransactionForm
             $model = $this->getTransaction();
 
             if (!$model->isNewRecord &&
-                $model->container->reduceFromTotal($model->amount) && // reduce by value
+                $model->container->updateTotal($model->amount) && // reduce by value
+                $model->category->updateTotal((new \DateTime($model->date)), $model->amount) && // Update category limit
                 $model->delete()
             ) {
                 $transaction->commit();

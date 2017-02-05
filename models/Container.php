@@ -13,7 +13,6 @@ use Yii;
  * @property double $total
  *
  * @property Currency $currency
- * @property ContainerLimit[] $containerLimits
  * @property Transaction[] $transactions
  */
 class Container extends \yii\db\ActiveRecord
@@ -35,6 +34,7 @@ class Container extends \yii\db\ActiveRecord
             [['name', 'currency_id'], 'required'],
             [['currency_id'], 'integer'],
             [['total'], 'number'],
+            ['total', 'default', 'value' => 0],
             [['name'], 'string', 'max' => 255],
             [['currency_id'], 'exist', 'skipOnError' => true, 'targetClass' => Currency::className(), 'targetAttribute' => ['currency_id' => 'id']],
         ];
@@ -64,14 +64,6 @@ class Container extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getContainerLimits()
-    {
-        return $this->hasMany(ContainerLimit::className(), ['container_id' => 'id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
     public function getTransactions()
     {
         return $this->hasMany(Transaction::className(), ['container_id' => 'id']);
@@ -82,26 +74,8 @@ class Container extends \yii\db\ActiveRecord
      * @param integer $amount
      * @return boolean
      */
-    private function updateTotal($amount) {
+    public function updateTotal($amount) {
          $this->total = $this->total + intval($amount);
          return $this->save();
-    }
-
-    /**
-     * Add $amount to container total
-     * @param integer $amount
-     * @return boolean
-     */
-    public function addToTotal($amount) {
-        return $this->updateTotal(abs(intval($amount)));
-    }
-
-    /**
-     * Reduce $amount from container total
-     * @param integer $amount
-     * @return boolean
-     */
-    public function reduceFromTotal($amount) {
-        return $this->updateTotal(-1 * abs(intval($amount)));
     }
 }

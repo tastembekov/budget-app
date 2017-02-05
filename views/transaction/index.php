@@ -1,7 +1,9 @@
 <?php
 
+use app\models\Transaction;
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\search\TransactionSearch */
@@ -20,16 +22,21 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            'container.name',
-            'date:date',
+            [
+                'format' => 'html',
+                'attribute' => 'date',
+                'value' => function (Transaction $model) {
+                    return Html::a(Yii::$app->formatter->asDate($model->date), Url::to(['view', 'id' => $model->id]));
+                }
+            ],
             [
                 'attribute' => 'amount',
                 'format' => ['decimal', 0],
             ],
-
-            ['class' => 'yii\grid\ActionColumn'],
+            'container.currency.code',
+            'container.name',
+            'category.name',
+            'description',
         ],
     ]); ?>
 </div>
