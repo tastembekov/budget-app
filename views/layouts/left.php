@@ -23,14 +23,14 @@
                 'items' => [
                     ['label' => 'Menu', 'options' => ['class' => 'header']],
                     [
-                        'label' => Yii::t('app', 'Currency'),
-                        'url' => ['currency/index'],
-                        'active' => Yii::$app->controller->id == 'currency'
-                    ],
-                    [
                         'label' => Yii::t('app', 'Containers'),
                         'url' => ['container/index'],
                         'active' => Yii::$app->controller->id == 'container'
+                    ],
+                    [
+                        'label' => Yii::t('app', 'Category Limits'),
+                        'url' => ['category-limit/index'],
+                        'active' => Yii::$app->controller->id == 'category-limit'
                     ],
                     [
                         'label' => Yii::t('app', 'Transactions'),
@@ -38,30 +38,14 @@
                         'active' => Yii::$app->controller->id == 'transaction'
                     ],
                     [
-                        'label' => 'Same tools',
-                        'icon' => 'fa fa-share',
-                        'url' => '#',
-                        'items' => [
-                            ['label' => 'Gii', 'icon' => 'fa fa-file-code-o', 'url' => ['/gii'],],
-                            ['label' => 'Debug', 'icon' => 'fa fa-dashboard', 'url' => ['/debug'],],
-                            [
-                                'label' => 'Level One',
-                                'icon' => 'fa fa-circle-o',
-                                'url' => '#',
-                                'items' => [
-                                    ['label' => 'Level Two', 'icon' => 'fa fa-circle-o', 'url' => '#',],
-                                    [
-                                        'label' => 'Level Two',
-                                        'icon' => 'fa fa-circle-o',
-                                        'url' => '#',
-                                        'items' => [
-                                            ['label' => 'Level Three', 'icon' => 'fa fa-circle-o', 'url' => '#',],
-                                            ['label' => 'Level Three', 'icon' => 'fa fa-circle-o', 'url' => '#',],
-                                        ],
-                                    ],
-                                ],
-                            ],
-                        ],
+                        'label' => Yii::t('app', 'Categories'),
+                        'url' => ['category/index'],
+                        'active' => Yii::$app->controller->id == 'category'
+                    ],
+                    [
+                        'label' => Yii::t('app', 'Currency'),
+                        'url' => ['currency/index'],
+                        'active' => Yii::$app->controller->id == 'currency'
                     ],
                 ],
             ]
